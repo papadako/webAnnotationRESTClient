@@ -1247,7 +1247,7 @@ var anno = (function () {
                 + "   \"@type\": \"" + anno.target.type + "\" \n"
                 + " },\n"
                 // Add motivation
-                + " \"oa:motivatedBy\":\"" + anno.motivated.type + "\"\n,"
+                + " \"oa:motivatedBy\":\"" + anno.motivated.type + "\",\n"
                 // Add motivation
                 + " \"oa:annotatedAt\":\"" + date.toISOString() + "\"\n"
                 + "}";
