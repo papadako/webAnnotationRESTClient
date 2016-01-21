@@ -321,9 +321,15 @@ var anno = (function () {
         if (state && state !== null) {
             var intro = document.getElementById(elementID);
             // Get all anchor elements in elementID
-            state.containedAnchorElements = intro.getElementsByTagName('a');
-            // TODO Have to check only for those elements that are lifewatch
-            // annotations
+            var anchors = Array.prototype.slice.call(intro.getElementsByTagName('a'));
+
+            // Keep only lifewatch species URIs
+            function species(value, index, ar) {
+                var contains = "http://www.lifewatchgreece.eu/entity/species/";
+                // values are anchors
+                return value.href.indexOf(contains) > -1;
+            }
+            state.containedAnchorElements = anchors.filter(species);
         }
     }
 
