@@ -786,7 +786,6 @@ var anno = (function () {
      * @returns {Boolean}
      */
     function checkAnnoObjectReady(anno) {
-        console.log(anno);
         if (anno) {
             if (anno.body && anno.body.type && anno.body.value) {
                 if (anno.target && anno.target.id && anno.target.type) {
@@ -998,7 +997,7 @@ var anno = (function () {
         for (var i = 0; i < parsedJSON.length; i++) {
             // read the annotation
             var currentAnno = {};
-            readAnnotation(parsedJSON[i]["@graph"], currentAnno);
+            readAnnotation(parsedJSON[i], currentAnno);
 
             // Currently type either simple Text or Polytraits
             var annoType = "";
@@ -1134,41 +1133,19 @@ var anno = (function () {
      */
     function readAnnotation(jsonld, anno) {
 
-        // This is slow, since we iterate two times the jsonld object
-
-        // Find the basic annotation object to find the URIS of bodies,targets, etc.
-        for (var i = 0; i < jsonld.length; i++) {
-            var object = jsonld[i];
-            // if this is an annotation object, get all relevant information
-            if (object["@type"] && object["@type"] === "oa:Annotation") {
-                anno.id = object["@id"].substr(object["@id"].lastIndexOf('/') + 1);    // id of anno
-                anno.URI = object["@id"];   // URI of anno
-                anno.annotatedBy = object["oa:annotatedBy"]["@id"];
-                anno.annotatedAt = object["oa:annotatedAt"] || object["annotatedAt"];
-                anno.serializedBy = object["oa:serializedBy"]["@id"];
-                anno.serializedAt = object["oa:serializedAt"] || object["serializedAt"];
-                anno.body = {};
-                anno.body.id = object["oa:hasBody"]["@id"];
-                anno.target = {};
-                anno.target.id = object["oa:hasTarget"]["@id"];
-                anno.motivatedBy = object["oa:motivatedBy"]["@id"];
-                break;
-            }
-        }
-
-        // Now fill the rest
-        for (var i = 0; i < jsonld.length; i++) {
-            var object = jsonld[i];
-            // if this is an annotation object, get all relevant information
-            if (object["@id"] === anno.body.id) {
-                anno.body = object;
-            } else if (object["@id"] === anno.target.id) {
-                anno.target = object;
-            } else if (object["@id"] === anno.serializedBy) {
-                anno.serializedBy = object;
-            } else if (object["@id"] === anno.annotatedBy) {
-                anno.annotatedBy = object;
-            }
+        // if this is an annotation object, get all relevant information
+        if (jsonld["@type"] && jsonld["@type"] === "oa:Annotation") {
+            anno.id = jsonld["@id"].substr(jsonld["@id"].lastIndexOf('/') + 1);    // id of anno
+            anno.URI = jsonld["@id"];   // URI of anno
+            anno.annotatedBy = jsonld["oa:annotatedBy"];
+            anno.annotatedAt = jsonld["oa:annotatedAt"] || jsonld["annotatedAt"];
+            anno.serializedBy = jsonld["oa:serializedBy"]["@id"];
+            anno.serializedAt = jsonld["oa:serializedAt"] || jsonld["serializedAt"];
+            anno.body = jsonld["oa:hasBody"]
+            anno.body.id = jsonld["oa:hasBody"]["@id"];
+            anno.target = jsonld["oa:hasTarget"]
+            anno.target.id = jsonld["oa:hasTarget"]["@id"];
+            anno.motivatedBy = jsonld["oa:motivatedBy"]["@id"];
         }
     }
 
@@ -2673,7 +2650,7 @@ var anno = (function () {
          */
         update: function () {
             if (state && state !== null) {
-	        findURLs(state.elementID);
+                findURLs(state.elementID);
                 ajaxAnnotatedURIs();
             }
         }
