@@ -842,7 +842,7 @@ var anno = (function () {
      */
     function handleRESTCreateAnnotation(request, targetURI) {
         // If annotation was created successfully
-        if (request.status === 201) {
+        if (request.status === 201 && annoConfig && annoConfig.enabled) {
             // addConsoleMessage
             showConsoleMessage("Annotation created!");
             // Now update the annotated URIs and also update the bar
@@ -878,7 +878,7 @@ var anno = (function () {
      * @returns {undefined}
      */
     function handleRESTRetrieveAnnotation(request, targetURI) {
-        if (request.readyState === 4) {
+        if (request.readyState === 4 && annoConfig && annoConfig.enabled) {
             if (request.status === 200) {
                 // Show the results of the ajax request to this specific div
                 document.getElementById("annoInfo").innerHTML =
@@ -921,7 +921,7 @@ var anno = (function () {
      * @returns {undefined}
      */
     function handleRESTDeleteAnnotation(request, targetURI) {
-        if (request.status === 200) {
+        if (request.status === 200 && annoConfig && annoConfig.enabled) {
             showConsoleMessage("Annotation removed!");
             // Now update the annotated URIs and also update the bar
             ajaxAnnotatedURIs();
@@ -1113,7 +1113,7 @@ var anno = (function () {
             pretty += "</li>";
 
             // Add delete button
-            pretty += "<button type=\"button\" class=\"btn btn-danger btn-block btn-wrap\" onclick=\"ajaxRESTDeleteAnnotation(\'"
+            pretty += "<button type=\"button\" class=\"btn btn-danger btn-block btn-wrap\" onclick=\"anno.deleteAnnotation(\'"
                     + currentAnno.id + "\',\'" + targetURI + "\');\">Remove</button>";
 
             pretty += "</ul>";
@@ -2625,7 +2625,7 @@ var anno = (function () {
         showAnnotation: function (URI) {
             // open the annotation bar
             showAnnoBar();
-            if (state && state !== null) {
+            if (state && state !== null && annoConfig && annoConfig.enabled) {
                 // Get annotations for this specific URL
                 ajaxRESTRetrieveAnnotation(URI);
             }
@@ -2640,10 +2640,23 @@ var anno = (function () {
         createAnnotation: function (URI) {
             // open the annotation bar
             showAnnoBar();
-            if (state && state !== null) {
+            if (state && state !== null && annoConfig && annoConfig.enabled) {
                 createAnnotationUI(URI);
             }
         },
+        /**
+         * Function responsible for deleting an annotation for a specific URI
+         * We have to pass the jsonld string of the annotation we want to create
+         *
+         * @param {type} URI
+         * @returns {undefined}
+         */
+        deleteAnnotation: function (annoID, targetURI) {
+            if (state && state !== null && annoConfig && annoConfig.enabled) {
+                ajaxRESTDeleteAnnotation(annoID, targetURI);
+            }
+        },
+
         /**
          * Method that updates the available URIs
          * @returns {undefined}
