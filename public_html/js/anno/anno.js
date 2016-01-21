@@ -28,6 +28,7 @@ var anno = (function () {
         this.hideTimer = null; // timer for tooltips
         this.activeTooltip = null; // holds the acrive tooltip
         this.annoBar = null; // holds the annotation bar
+        this.elementID = null;  // holds the elementID we want to annotate
     };
 // This object holds internal information for supporting
 // annotation. Exists only if annotation is enabled.
@@ -321,6 +322,8 @@ var anno = (function () {
             var intro = document.getElementById(elementID);
             // Get all anchor elements in elementID
             state.containedAnchorElements = intro.getElementsByTagName('a');
+            // TODO Have to check only for those elements that are lifewatch
+            // annotations
         }
     }
 
@@ -2602,7 +2605,7 @@ var anno = (function () {
          * @param {type} elementID
          * @returns {undefined}
          */
-        toggleAnnotationService: function (elementID) {
+        toggleAnnotation: function (elementID) {
             // If annotation is not enabled
             if (annoConfig.enabled === false) {
                 // Set annotation to true
@@ -2617,6 +2620,8 @@ var anno = (function () {
                 // which is called by the handler of the ajax request
                 // Send the Ajax request
                 ajaxAnnotatedURIs();
+                // Hold the element ID
+                state.elementID = elementID;
             } else {
                 // disable
                 annoConfig.enabled = false;
@@ -2660,8 +2665,11 @@ var anno = (function () {
          * Method that updates the available URIs
          * @returns {undefined}
          */
-        updateURIs: function () {
-
+        update: function () {
+            if (state && state !== null) {
+	        findURLs(state.elementID);
+                ajaxAnnotatedURIs();
+            }
         }
     };
 })();
