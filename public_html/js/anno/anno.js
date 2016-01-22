@@ -7,7 +7,6 @@
 var anno = (function () {
 // Object that holds annotation related information
     var annoConfig = {
-        enabled: false, // is annotation enabled?
         domain: 'http://62.217.127.128', // server offering the REST API
         port: 8080, // port of the server
         service: 'annotationService/annotations'   // the service runs at
@@ -22,6 +21,7 @@ var anno = (function () {
 
 // Create the constructor for storing the state
     var State = function () {
+        this.enabled = false, // is annotation enabled?
         this.containedAnchorElements = []; // array of available anchors inside an element
         this.annotatedURIs = {}; // holds the annotated URIs, and their counts, etc.,
         this.annotatedAnchoredElements = []; // holds the elements that are annotated
@@ -118,7 +118,7 @@ var anno = (function () {
      */
     function updateAnnotatedAnchorElements() {
         // if annotation is enabled
-        if (annoConfig.enabled === true) {
+        if (state.enabled === true) {
             for (var i = 0; i < state.containedAnchorElements.length; i++) {
                 // Current element
                 var elem = state.containedAnchorElements[i];
@@ -842,7 +842,7 @@ var anno = (function () {
      */
     function handleRESTCreateAnnotation(request, targetURI) {
         // If annotation was created successfully
-        if (request.status === 201 && annoConfig && annoConfig.enabled) {
+        if (request.status === 201 && state && state.enabled) {
             // addConsoleMessage
             showConsoleMessage("Annotation created!");
             // Now update the annotated URIs and also update the bar
@@ -878,7 +878,7 @@ var anno = (function () {
      * @returns {undefined}
      */
     function handleRESTRetrieveAnnotation(request, targetURI) {
-        if (request.readyState === 4 && annoConfig && annoConfig.enabled) {
+        if (request.readyState === 4 && state && state.enabled) {
             if (request.status === 200) {
                 // Show the results of the ajax request to this specific div
                 document.getElementById("annoInfo").innerHTML =
@@ -921,7 +921,7 @@ var anno = (function () {
      * @returns {undefined}
      */
     function handleRESTDeleteAnnotation(request, targetURI) {
-        if (request.status === 200 && annoConfig && annoConfig.enabled) {
+        if (request.status === 200 && state && state.enabled) {
             showConsoleMessage("Annotation removed!");
             // Now update the annotated URIs and also update the bar
             ajaxAnnotatedURIs();
@@ -2590,12 +2590,15 @@ var anno = (function () {
          * @returns {undefined}
          */
         toggleAnnotation: function (elementID) {
-            // If annotation is not enabled
-            if (annoConfig.enabled === false) {
-                // Set annotation to true
-                annoConfig.enabled = true;
+            // First time we come here
+            if (state === undefined)
                 // Init state
                 state = new State();
+
+            // If annotation is not enabled
+            if (state.enabled === false) {
+                // Set annotation to true
+                state.enabled = true;
                 // Init the annotation bar
                 initAnnotationBar();
                 // find urls in this specific element
@@ -2608,13 +2611,13 @@ var anno = (function () {
                 state.elementID = elementID;
             } else {
                 // disable
-                annoConfig.enabled = false;
+                state.enabled = false;
                 // Remove annotations from annotated URIs
                 updateAnnotatedAnchorElements();
                 // Now remove also the bar
                 removeAnnotationBar();
                 // reset state
-                state = null;
+                //state = null;
             }
         },
         /**
@@ -2626,7 +2629,7 @@ var anno = (function () {
         showAnnotation: function (URI) {
             // open the annotation bar
             showAnnoBar();
-            if (state && state !== null && annoConfig && annoConfig.enabled) {
+            if (state && state !== null && state.enabled) {
                 // Get annotations for this specific URL
                 ajaxRESTRetrieveAnnotation(URI);
             }
@@ -2641,7 +2644,7 @@ var anno = (function () {
         createAnnotation: function (URI) {
             // open the annotation bar
             showAnnoBar();
-            if (state && state !== null && annoConfig && annoConfig.enabled) {
+            if (state && state !== null && state.enabled) {
                 createAnnotationUI(URI);
             }
         },
@@ -2653,7 +2656,7 @@ var anno = (function () {
          * @returns {undefined}
          */
         deleteAnnotation: function (annoID, targetURI) {
-            if (state && state !== null && annoConfig && annoConfig.enabled) {
+            if (state && state !== null && state.enabled) {
                 ajaxRESTDeleteAnnotation(annoID, targetURI);
             }
         },
@@ -2667,6 +2670,26 @@ var anno = (function () {
                 findURLs(state.elementID);
                 ajaxAnnotatedURIs();
             }
+        },
+        /**
+         * Method that checks if anno is on
+         * returns boolean
+         */
+        isOn: function () {
+            if (state && state !== null) {
+                return state.enabled;
+            } else
+                return false;
+        },
+        /**
+         * Method that checks if anno is off
+         * returns boolean
+         */
+        isOff: function () {
+            if (state && state !== null) {
+                return !state.enabled;
+            } else
+                return false;
         }
     };
 })();
