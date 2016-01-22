@@ -7,11 +7,9 @@
 var anno = (function () {
 // Object that holds annotation related information
     var annoConfig = {
-        //domain: 'http://localhost', // server offering the REST API
         domain: 'http://62.217.127.128', // server offering the REST API
         port: 8080, // port# of the server
         service: 'annotationService/annotations'   // the service runs at
-        //service: 'LifeWatchAnnotation/annotations'   // the service runs at
     };
 // function that returns the url according to the configuration of annotation
 // e.g. http://localhost:8084/LifeWatchAnnotation/annotations/
@@ -2691,7 +2689,7 @@ var anno = (function () {
             if (state && state !== null) {
                 return !state.enabled;
             } else
-                return false;
+                return true;
         }
     };
 })();
