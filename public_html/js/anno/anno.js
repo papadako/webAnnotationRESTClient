@@ -9,8 +9,8 @@ var anno = (function () {
     var annoConfig = {
         enabled: false, // is annotation enabled?
         domain: 'http://62.217.127.128', // server offering the REST API
-        port: 8084, // port of the server
-        service: 'LifeWatchAnnotation/annotations'   // the service runs at
+        port: 8080, // port of the server
+        service: 'annotationService/annotations'   // the service runs at
     };
 // function that returns the url according to the configuration of annotation
 // e.g. http://localhost:8084/LifeWatchAnnotation/annotations/
@@ -864,8 +864,8 @@ var anno = (function () {
         };
         // Set header to ld+json
         var retrieveURL = getServiceURL() + "target/" + "?uri=" + encodeURIComponent(targetURI);
-        request.setRequestHeader("Content-Type", "application/ld+json;charset=UTF-8");
         request.open("GET", retrieveURL, true);
+        request.setRequestHeader("Content-Type", "application/ld+json;charset=UTF-8");
         var parameters = null;
         request.send(parameters);
         showConsoleMessage("Retrieving annotations...");
