@@ -8,7 +8,7 @@ var anno = (function () {
 // Object that holds annotation related information
     var annoConfig = {
         enabled: false, // is annotation enabled?
-        domain: 'http://localhost', // server offering the REST API
+        domain: 'http://62.217.127.128', // server offering the REST API
         port: 8084, // port of the server
         service: 'LifeWatchAnnotation/annotations'   // the service runs at
     };
@@ -826,8 +826,8 @@ var anno = (function () {
                 handleRESTCreateAnnotation(request, targetURI);
             }
         };
-        // Set header to ld+json
         request.open("POST", getServiceURL(), true);
+        // Set header to ld+json
         request.setRequestHeader("Content-Type", "application/ld+json;charset=UTF-8");
         var parameters = anno;
         request.send(parameters);
@@ -864,8 +864,8 @@ var anno = (function () {
         };
         // Set header to ld+json
         var retrieveURL = getServiceURL() + "target/" + "?uri=" + encodeURIComponent(targetURI);
-        request.open("GET", retrieveURL, true);
         request.setRequestHeader("Content-Type", "application/ld+json;charset=UTF-8");
+        request.open("GET", retrieveURL, true);
         var parameters = null;
         request.send(parameters);
         showConsoleMessage("Retrieving annotations...");
@@ -905,8 +905,8 @@ var anno = (function () {
                 handleRESTDeleteAnnotation(request, targetURI);
             }
         };
-        // Set header to ld+json
         request.open("DELETE", uri, true);
+        // Set header to ld+json
         request.setRequestHeader("Content-Type", "application/ld+json;charset=UTF-8");
         var parameters = null;
         request.send(parameters);
@@ -946,6 +946,7 @@ var anno = (function () {
         request.open("POST", getServiceURL() + "targetsOnly", true);
         // Set header to json
         request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
         var parameters = null;
         request.send(parameters);
     }
