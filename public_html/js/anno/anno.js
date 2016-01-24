@@ -1003,7 +1003,7 @@ var anno = (function () {
         var pretty = "";
 
         pretty += "<div id=\"annoBarHeader\" class=\"list-group-item \"><h5><a class=\"wrap\" href=\""
-                + targetURI + "\">" + targetURI + "</a>";
+                + targetURI + "\">" + targetURI + "</a><br>";
         if (parsedJSON.length === 1)
             pretty += "<br><b>" + parsedJSON.length + "</b> annotation available</h5></div>";
         else
@@ -1088,10 +1088,19 @@ var anno = (function () {
             pretty += "<a href=\"#annoPanelCollapseTarget" + (i + 1) + "\" data-toggle=\"collapse\">";
             pretty += "<h6>Target</h6></a>";
             pretty += "<div id=\"annoPanelCollapseTarget" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
+            // Check the namespace
+            // TODO: Have to find a nice way to do this by using the context of the jsonld
+            // Currently we only have an umbelrc:Animal
+            var targetURL = "";
+            if (currentAnno.target["@type"].substring(0, "umbelrc".length)) {
+                targetURL = "http://umbel.org/umbel/rc/" + currentAnno.target["@type"]
+                        .substring(currentAnno.target["@type"].indexOf(":") + 1);
+            }
+
             pretty += "<b><i>id</i>:</b> <b><a class=\"annoPanelRef\" target=\"_blank\" href=\""
                     + currentAnno.target["@id"] + "\">" + currentAnno.target["@id"] + "</a></b><br>";
             pretty += "<b><i>type</i>:</b> <b><a class=\"annoPanelRef\" target=\"_blank\" href=\""
-                    + currentAnno.target["@type"] + "\">" + currentAnno.target["@type"] + "</a></b><br>";
+                    + targetURL + "\">" + currentAnno.target["@type"] + "</a></b><br>";
             pretty += "</div>";
             pretty += "</li>";
 
