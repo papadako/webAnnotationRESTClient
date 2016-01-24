@@ -72,7 +72,6 @@
     white-space: normal !important;
     word-wrap: break-word;
     word-break: normal;
-    display: inline-block;
     font-weight: bold;
 }
 
@@ -107,6 +106,7 @@
 #annoBar {
     background-color: #E6F3F7;
     height: 100%;
+    width: 300px!important;
 }
 
 #annoBar h4{
@@ -158,30 +158,38 @@ This is responsible for the annotation information
 shown in the annotation bar
 */
 #annoInfo {
+    height: inherit;
     overflow: auto;
     font-size: 75%;
-    height: 82%;
+    overflow: hidden;
+    position: relative;
 }
 
 #annoConsole {
-    overflow: auto;
     font-size: 75%;
-    height: 7%;
+    height: 5%;
+    width: 100%;
     border-top: 1px solid #000;
     background-color: #C6D3D7;
     vertical-align: bottom;
+    position: absolute;
+    bottom: 0;
+    display: block;
 }
 
 .annoConsole {
     background-color: #C6D3D7;
     position: relative;
     display: block;
-    padding: 10px 15px;
+    padding: 0px 10px;
+    margin: 0px 0px;
+    overflow: hidden;
 }
 
 
 #annoBarHeader {
     background-color: #E6F3F7;
+    overflow: hidden;
 }
 
 .annoParts {
@@ -193,4 +201,19 @@ shown in the annotation bar
     min-height: 1px;
     word-wrap: break-word; 
     word-break: break-all;
+}
+
+.anno-list-group-item {
+    position: relative;
+    display: block;
+    padding: 5px 5px;
+    margin-bottom: 4px;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+}
+.anno-list-group {
+    padding-left: 0px;
+    margin-bottom: 20px;
+    height: inherit;
+    overflow: auto;
 }

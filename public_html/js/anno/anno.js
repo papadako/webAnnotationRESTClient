@@ -346,7 +346,7 @@ var anno = (function () {
         createUI += "<div id=\"annoBarHeader\" class=\"list-group-item\"><b><h6>Create annotation targeting</h6>";
         createUI += "<a href=\"" + targetURI + "\" target=\"_blank\">" + targetURI + "</a></b></div>";
         // Annotation Type
-        createUI += "<div class=\"list-group-item\" id=\"annoCreationType\">";
+        createUI += "<div class=\"anno-list-group-item\" id=\"annoCreationType\">";
         createUI += "<h6><b>Annotation type</b></h6>";
         // Here is the form
         createUI += "<form class=\"form-horizontal\" role=\"form\">";
@@ -416,7 +416,7 @@ var anno = (function () {
 
         // Annotation Type
         var bodyUI = "";
-        bodyUI += "<div class=\"list-group-item\" id=\"annoBodyType\">";
+        bodyUI += "<div class=\"anno-list-group-item\" id=\"annoBodyType\">";
         bodyUI += "<h6><b>Body</b></h6>";
         // Here is the form for the body type
         bodyUI += "<form class=\"form-horizontal\" role=\"form\">";
@@ -495,7 +495,7 @@ var anno = (function () {
 
         var targetUI = "";
         // First show the target
-        targetUI += "<div class=\"list-group-item\" id=\"annoTargetType\">";
+        targetUI += "<div class=\"anno-list-group-item\" id=\"annoTargetType\">";
         targetUI += "<h6><b>Target</b></h6>";
         targetUI += "<label class=\"col-lg-3 control-label\" for=\"annotationTargetID\">ID:</label>";
         targetUI += "<a href=\"" + anno.target.id + "\" target=\"_blank\" class=\"annoPanelRef\">" + anno.target.id + "</a>";
@@ -520,7 +520,7 @@ var anno = (function () {
         anno.motivated = {};
         var motivationUI = "";
         // First show the target
-        motivationUI += "<div class=\"list-group-item\" id=\"annoMotivationType\">";
+        motivationUI += "<div class=\"anno-list-group-item\" id=\"annoMotivationType\">";
         motivationUI += "<h6><b>Motivation</b></h6>";
 
         // type selection
@@ -544,7 +544,7 @@ var anno = (function () {
         // Until we start to use the authorization, just sent the default lifewatch user
         anno.prov = {};
         var provUI = "";
-        provUI += "<div class=\"list-group-item\" id=\"annoProvType\">";
+        provUI += "<div class=\"anno-list-group-item\" id=\"annoProvType\">";
         provUI += "<h6><b>Provenance</b></h6>";
         provUI += "<label class=\"col-lg-3 control-label\">user:</label>";
         provUI += "<label class=\"col-lg-9 control-label\">lifewatch</label><br>";
@@ -555,7 +555,7 @@ var anno = (function () {
 
         // Button for submit
         var submitButton = "";
-        submitButton += "<div class=\"list-group-item\" id=\"annoCreateButtonType\">";
+        submitButton += "<div class=\"anno-list-group-item\" id=\"annoCreateButtonType\">";
         submitButton += "<button id=\"annotationCreateButton\" class=\"btn btn-block\" disabled>Create</button>";
         submitButton += "</div>";
 
@@ -903,7 +903,7 @@ var anno = (function () {
                         prettyJSONLDAnnotationSpecificTarget(request.responseText, targetURI);
             } else if (request.status === 404) {
                 document.getElementById("annoInfo").innerHTML =
-                        "<div id=\"annoBarHeader\" class=\"list-group-item\"><h6><a href=\""
+                        "<div id=\"annoBarHeader\" class=\"anno-list-group-item\"><h6><a href=\""
                         + targetURI + "\">" + targetURI + "</a><br><b>No annotations found!</b></h6></div>";
             }
             showConsoleMessage("Annotations retrieved!");
@@ -1002,7 +1002,7 @@ var anno = (function () {
         var parsedJSON = JSON.parse(jsonld);
         var pretty = "";
 
-        pretty += "<div id=\"annoBarHeader\" class=\"list-group-item \"><h5><a class=\"wrap\" href=\""
+        pretty += "<div id=\"annoBarHeader\" class=\"anno-list-group-item\"><h5><a class=\"wrap\" href=\""
                 + targetURI + "\">" + targetURI + "</a><br>";
         if (parsedJSON.length === 1)
             pretty += "<br><b>" + parsedJSON.length + "</b> annotation available</h5></div>";
@@ -1011,7 +1011,7 @@ var anno = (function () {
 
         // Bootstrap list group
         // 1st the header
-        pretty += "<ul class=\"list-group\">";
+        pretty += "<ul class=\"anno-list-group\">";
 
         for (var i = 0; i < parsedJSON.length; i++) {
             // read the annotation
@@ -1048,16 +1048,16 @@ var anno = (function () {
                 annoType = "POLYTRAITS - \n"
                         + description + "(" + modality + ")";
             }
-            pretty += "<li class=\"list-group-item\">";
+            pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a class=\"btn btn-primary btn-block wrap\" href=\"#annoPanelCollapse"
                     + (i + 1) + "\" data-toggle=\"collapse\">";
             pretty += "<h6>" + (i + 1) + "." + annoType + "</h6></a>\n";
             pretty += "<div id=\"annoPanelCollapse" + (i + 1) + "\" class=\"panel-collapse collapse\">";
             // List with annotation elements
-            pretty += "<ul class=\"list-group\">";
+            pretty += "<ul class=\"list-group\" style=\"margin: 2px\">";
 
             // Body
-            pretty += "<li class=\"list-group-item\">";
+            pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a href=\"#annoPanelCollapseBody" + (i + 1) + "\" data-toggle=\"collapse\">";
             pretty += "<h6>Body</h6></a>";
             pretty += "<div id=\"annoPanelCollapseBody" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
@@ -1084,7 +1084,7 @@ var anno = (function () {
             pretty += "</li>";
 
             // Target
-            pretty += "<li class=\"list-group-item\">";
+            pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a href=\"#annoPanelCollapseTarget" + (i + 1) + "\" data-toggle=\"collapse\">";
             pretty += "<h6>Target</h6></a>";
             pretty += "<div id=\"annoPanelCollapseTarget" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
@@ -1105,7 +1105,7 @@ var anno = (function () {
             pretty += "</li>";
 
             // MotivatedBy
-            pretty += "<li class=\"list-group-item\">";
+            pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a href=\"#annoPanelCollapseMotivated" + (i + 1) + "\" data-toggle=\"collapse\">";
             pretty += "<h6>Motivated By</h6></a>";
             pretty += "<div id=\"annoPanelCollapseMotivated" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
@@ -1121,7 +1121,7 @@ var anno = (function () {
             pretty += "</li>";
 
             // Provenance
-            pretty += "<li class=\"list-group-item\">";
+            pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a href=\"#annoPanelCollapseProv" + (i + 1) + "\" data-toggle=\"collapse\">";
             pretty += "<h6>Provenance</h6></a>";
             pretty += "<div id=\"annoPanelCollapseProv" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
@@ -1133,7 +1133,7 @@ var anno = (function () {
             pretty += "</li>";
 
             // JSON
-            pretty += "<li class=\"list-group-item\">";
+            pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a href=\"#annoPanelCollapseJSON" + (i + 1) + "\" data-toggle=\"collapse\">";
             pretty += "<h6>JSON-LD representation</h6></a>";
             pretty += "<div id=\"annoPanelCollapseJSON" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
@@ -1143,7 +1143,7 @@ var anno = (function () {
 
             // Add delete button
             pretty += "<button type=\"button\" class=\"btn btn-danger btn-block wrap\" onclick=\"anno.deleteAnnotation(\'"
-                    + currentAnno.id + "\',\'" + targetURI + "\');\">Remove</button>";
+                    + currentAnno.id + "\',\'" + targetURI + "\');\">Remove</button><br>";
 
             pretty += "</ul>";
             pretty += "</li>";
