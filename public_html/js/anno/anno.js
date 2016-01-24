@@ -1011,7 +1011,7 @@ var anno = (function () {
 
         // Bootstrap list group
         // 1st the header
-        pretty += "<ul class=\"anno-list-group\">";
+        pretty += "<hr></hr><ul class=\"anno-list-group\">";
 
         for (var i = 0; i < parsedJSON.length; i++) {
             // read the annotation
