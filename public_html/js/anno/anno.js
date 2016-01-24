@@ -556,7 +556,7 @@ var anno = (function () {
         // Button for submit
         var submitButton = "";
         submitButton += "<div class=\"anno-list-group-item\" id=\"annoCreateButtonType\">";
-        submitButton += "<button id=\"annotationCreateButton\" class=\"btn btn-block\" disabled>Create</button>";
+        submitButton += "<button id=\"annotationCreateButton\" class=\"btn btn-success btn-block\" disabled>Create</button>";
         submitButton += "</div>";
 
         // Add the button code

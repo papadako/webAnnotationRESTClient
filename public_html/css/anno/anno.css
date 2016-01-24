@@ -114,6 +114,7 @@
     padding: 20px;
     margin: 0;
     font-weight: 200;
+    height: 11%;
 }
 #annoBar a{
 /*    border-bottom: 1px solid #D8D8D8;
@@ -162,6 +163,7 @@ shown in the annotation bar
     font-size: 75%;
     overflow: hidden;
     position: relative;
+    height: 84%
 }
 
 #annoConsole {
