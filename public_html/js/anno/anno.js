@@ -646,6 +646,24 @@ var anno = (function () {
             ajaxRESTCreateAnnotation(jsonldAnno, anno.target.id);
         });
 
+        // If we click the format
+        $("#annotationBodyFormatForm").change(function () {
+            var selText = $("#annotationBodyFormatForm").val();
+            // set the type of the annotation
+            anno.body.format = selText;
+            // Check if we should enable the button
+            checkAnnotationCreateButton(anno);
+        });
+
+        // If we click the language
+        $("#annotationBodyLanguageForm").change(function () {
+            var selText = $("#annotationBodyLanguageForm").val();
+            // set the type of the annotation
+            anno.body.language = selText;
+            // Check if we should enable the button
+            checkAnnotationCreateButton(anno);
+        });
+
         // For select2
         $.fn.select2.amd.require(['select2/compat/matcher'], function (oldMatcher) {
             $(".js-example-basic-single").select2({
@@ -724,7 +742,7 @@ var anno = (function () {
     }
 
     /**
-     * Function that returns a strong with the available polytrait types
+     * Function that returns a string with the available polytrait types
      * @returns {String}
      */
     function languageTypes() {
