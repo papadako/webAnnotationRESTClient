@@ -1002,12 +1002,12 @@ var anno = (function () {
         var parsedJSON = JSON.parse(jsonld);
         var pretty = "";
 
-        pretty += "<div id=\"annoBarHeader\" class=\"list-group-item\"><h6><a href=\""
+        pretty += "<div id=\"annoBarHeader\" class=\"list-group-item \"><h5><a class=\"wrap\" href=\""
                 + targetURI + "\">" + targetURI + "</a>";
         if (parsedJSON.length === 1)
-            pretty += "<br><b>" + parsedJSON.length + "</b> annotation available</h6></div>";
+            pretty += "<br><b>" + parsedJSON.length + "</b> annotation available</h5></div>";
         else
-            pretty += "<br><b>" + parsedJSON.length + "</b> annotations available</h6></div>";
+            pretty += "<br><b>" + parsedJSON.length + "</b> annotations available</h5></div>";
 
         // Bootstrap list group
         // 1st the header
@@ -1049,7 +1049,7 @@ var anno = (function () {
                         + description + "(" + modality + ")";
             }
             pretty += "<li class=\"list-group-item\">";
-            pretty += "<a class=\"btn btn-info btn-block btn-wrap\" href=\"#annoPanelCollapse"
+            pretty += "<a class=\"btn btn-primary btn-block wrap\" href=\"#annoPanelCollapse"
                     + (i + 1) + "\" data-toggle=\"collapse\">";
             pretty += "<h6>" + (i + 1) + "." + annoType + "</h6></a>\n";
             pretty += "<div id=\"annoPanelCollapse" + (i + 1) + "\" class=\"panel-collapse collapse\">";
@@ -1133,7 +1133,7 @@ var anno = (function () {
             pretty += "</li>";
 
             // Add delete button
-            pretty += "<button type=\"button\" class=\"btn btn-danger btn-block btn-wrap\" onclick=\"anno.deleteAnnotation(\'"
+            pretty += "<button type=\"button\" class=\"btn btn-danger btn-block wrap\" onclick=\"anno.deleteAnnotation(\'"
                     + currentAnno.id + "\',\'" + targetURI + "\');\">Remove</button>";
 
             pretty += "</ul>";
