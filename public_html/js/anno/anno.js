@@ -998,7 +998,8 @@ var anno = (function () {
         for (var i = 0; i < parsedJSON.length; i++) {
             // read the annotation
             var currentAnno = {};
-            readAnnotation(parsedJSON[i], currentAnno);
+            // Be careful where we search to find the annotation properties!!!
+            readAnnotation(parsedJSON[i]["@graph"][0], currentAnno);
 
             // Currently type either simple Text or Polytraits
             var annoType = "";
@@ -1019,7 +1020,7 @@ var anno = (function () {
                 } else if (result.length === 1) {
                     // access the foo property using result[0].foo
                     description = result[0].desc;
-                    modality = result[0].modalities[currentAnno.body["value"]]
+                    modality = result[0].modalities[currentAnno.body["value"]];
                 } else {
                     // multiple items found
                     // We should never be here
@@ -1082,12 +1083,12 @@ var anno = (function () {
             pretty += "<h6>Motivated By</h6></a>";
             pretty += "<div id=\"annoPanelCollapseMotivated" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
             // If motivations is oa:describing
-            if (currentAnno.motivatedBy === "oa:describing") {
+            if (currentAnno.motivated.by === "oa:describing") {
                 pretty += "<b><i>motivation</i>:</b> <b><a target=\"_blank\" href=\""
                         + "http://www.w3.org/ns/oa#describing" + "\">"
                         + "Describing" + "</a></b><br>";
             } else
-                pretty += "<b><i>motivation</i>: " + currentAnno.motivatedBy + "</b>";
+                pretty += "<b><i>motivation</i>: " + currentAnno.motivated.by + "</b>";
 
             pretty += "</div>";
             pretty += "</li>";
@@ -1135,18 +1136,21 @@ var anno = (function () {
     function readAnnotation(jsonld, anno) {
 
         // if this is an annotation object, get all relevant information
+        // Have to be rather careful with the names!
+        console.log(jsonld);
         if (jsonld["@type"] && jsonld["@type"] === "oa:Annotation") {
             anno.id = jsonld["@id"].substr(jsonld["@id"].lastIndexOf('/') + 1);    // id of anno
             anno.URI = jsonld["@id"];   // URI of anno
-            anno.annotatedBy = jsonld["oa:annotatedBy"];
+            anno.annotatedBy = jsonld["oa:annotatedBy"] || jsonld["annotatedBy"];
             anno.annotatedAt = jsonld["oa:annotatedAt"] || jsonld["annotatedAt"];
-            anno.serializedBy = jsonld["oa:serializedBy"];
+            anno.serializedBy = jsonld["oa:serializedBy"] || jsonld["serializedBy"];
             anno.serializedAt = jsonld["oa:serializedAt"] || jsonld["serializedAt"];
-            anno.body = jsonld["oa:hasBody"];
-            anno.body.id = jsonld["oa:hasBody"]["@id"];
-            anno.target = jsonld["oa:hasTarget"]
-            anno.target.id = jsonld["oa:hasTarget"]["@id"];
-            anno.motivatedBy = jsonld["oa:motivatedBy"]["@id"];
+            anno.body = jsonld["oa:hasBody"] || jsonld["body"];
+            anno.body.id = anno.body["@id"];
+            anno.target = jsonld["oa:hasTarget"] || jsonld["target"];
+            anno.target.id = anno.target["@id"];
+            anno.motivated = jsonld["oa:motivatedBy"] || jsonld["motivation"];
+            anno.motivated.by = anno.motivated["@id"];
         }
     }
 
