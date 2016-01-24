@@ -1044,14 +1044,14 @@ var anno = (function () {
                     // We should never be here
                     alert("Something went wrong! Many types were found!");
                 }
-
-                annoType = "POLYTRAITS - \n"
-                        + description + "(" + modality + ")";
+                // Show information of annotation type and value
+                annoType = "POLYTRAITS - "
+                        + description + " [" + modality + "]";
             }
             pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a class=\"btn btn-primary btn-block wrap\" href=\"#annoPanelCollapse"
                     + (i + 1) + "\" data-toggle=\"collapse\">";
-            pretty += "<h6>" + (i + 1) + "." + annoType + "</h6></a>\n";
+            pretty += "<h5>" + (i + 1) + "." + annoType + "</h5></a>\n";
             pretty += "<div id=\"annoPanelCollapse" + (i + 1) + "\" class=\"panel-collapse collapse\">";
             // List with annotation elements
             pretty += "<ul class=\"list-group\" style=\"margin: 2px\">";
