@@ -1059,7 +1059,7 @@ var anno = (function () {
             // Body
             pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a href=\"#annoPanelCollapseBody" + (i + 1) + "\" data-toggle=\"collapse\">";
-            pretty += "<h6>Body</h6></a>";
+            pretty += "<h6><u>Body</u></h6></a>";
             pretty += "<div id=\"annoPanelCollapseBody" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
             // If this is not a dctype text
             if (annoType !== "DCTYPE - TEXT") {
@@ -1086,7 +1086,7 @@ var anno = (function () {
             // Target
             pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a href=\"#annoPanelCollapseTarget" + (i + 1) + "\" data-toggle=\"collapse\">";
-            pretty += "<h6>Target</h6></a>";
+            pretty += "<h6><u>Target</u></h6></a>";
             pretty += "<div id=\"annoPanelCollapseTarget" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
             // Check the namespace
             // TODO: Have to find a nice way to do this by using the context of the jsonld
@@ -1107,7 +1107,7 @@ var anno = (function () {
             // MotivatedBy
             pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a href=\"#annoPanelCollapseMotivated" + (i + 1) + "\" data-toggle=\"collapse\">";
-            pretty += "<h6>Motivated By</h6></a>";
+            pretty += "<h6><u>Motivated By</u></h6></a>";
             pretty += "<div id=\"annoPanelCollapseMotivated" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
             // If motivations is oa:describing
             if (currentAnno.motivated.by === "oa:describing") {
@@ -1135,7 +1135,7 @@ var anno = (function () {
             // JSON
             pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a href=\"#annoPanelCollapseJSON" + (i + 1) + "\" data-toggle=\"collapse\">";
-            pretty += "<h6>JSON-LD representation</h6></a>";
+            pretty += "<h6><u>JSON-LD representation</u></h6></a>";
             pretty += "<div id=\"annoPanelCollapseJSON" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
             pretty += jsonldMarkup(parsedJSON[i], parsedJSON[i]["@context"]);
             pretty += "</div>";
