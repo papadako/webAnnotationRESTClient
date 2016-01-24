@@ -62,7 +62,7 @@ var anno = (function () {
         });
         //
         state.annoBar = $("#annoBar").slideReveal({
-            // width: 100,
+            width: 300,
             push: false,
             position: "right",
             // speed: 600,
