@@ -9,7 +9,9 @@ var anno = (function () {
     var annoConfig = {
         domain: 'http://62.217.127.128', // server offering the REST API
         port: 8080, // port# of the server
-        service: 'annotationService/annotations'   // the service runs at
+        service: 'annotationService/annotations', // the service runs at
+        // filter this out from the URIs we want to annotate
+        //filterOutFromURIs: 'metacatalogue.portal.lifewatch.gr.eu/search/browse?uri='
     };
 // function that returns the url according to the configuration of annotation
 // e.g. http://localhost:8084/LifeWatchAnnotation/annotations/
@@ -122,8 +124,9 @@ var anno = (function () {
             for (var i = 0; i < state.containedAnchorElements.length; i++) {
                 // Current element
                 var elem = state.containedAnchorElements[i];
+                var targetURI = getQueryParameterOfURL('uri', elem.href);
                 // If the href of this element is annotated
-                if (isAnnotated(elem.href)) {
+                if (isAnnotated(targetURI)) {
                     // Now wrap it around a span and highlight it
                     annotateElement(elem, true);
                     var annoWrapper = $(elem).parent();
@@ -134,11 +137,11 @@ var anno = (function () {
                             annoWrapper,
                             '<div>'
                             + '<span class=\"label label-primary\" style=\"font-size: 100%\" title="Number of annotations">'
-                            + state.annotatedURIs[elem.href] + '</span>'
+                            + state.annotatedURIs[targetURI] + '</span>'
                             + '<button onclick="anno.createAnnotation(\''
-                            + elem.href + '\');" class="button button-anno" title="New Annotation"></button>'
+                            + targetURI + '\');" class="button button-anno" title="New Annotation"></button>'
                             + '<button onclick="anno.showAnnotation(\''
-                            + elem.href + '\');" class="button button-show" title="Show Annotations"></button>'
+                            + targetURI + '\');" class="button button-show" title="Show Annotations"></button>'
                             + '</div>'
                             );
                 } else {
@@ -151,7 +154,7 @@ var anno = (function () {
                             annoWrapper,
                             '<div>'
                             + '<button onclick="anno.createAnnotation(\''
-                            + elem.href + '\');" class="button button-anno" title="New Annotation"></button>'
+                            + targetURI + '\');" class="button button-anno" title="New Annotation"></button>'
                             + '</div>'
                             );
                 }
@@ -327,7 +330,8 @@ var anno = (function () {
             function species(value, index, ar) {
                 var contains = "http://www.lifewatchgreece.eu/entity/species/";
                 // values are anchors
-                return value.href.indexOf(contains) > -1;
+                var filtered = getQueryParameterOfURL('uri', value.href);
+                return filtered.indexOf(contains) === 0;
             }
             state.containedAnchorElements = anchors.filter(species);
         }
@@ -374,6 +378,22 @@ var anno = (function () {
     }
 
     /**
+     * Get query parameter of url
+     * @param {type} name
+     * @param {type} url
+     * @returns {Array|anno_L7.getQueryParameterOfURL.results}
+     */
+    function getQueryParameterOfURL(name, url) {
+        if (!url)
+            url = location.href;
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(url);
+        return results === null ? url : results[1];
+    }
+
+    /**
      * Adds events for managing the drop down menus of the type of the annotation
      * @param {type} anno
      * @param {type} targetURI
@@ -385,7 +405,9 @@ var anno = (function () {
             var selText = $("#annotationTypeForm").val();
             anno = {}; // reset annotation object
             anno.target = {};
-            anno.target.id = targetURI;
+            // Remove from the URI the filter out
+            anno.target.id = targetURI
+            alert(anno.target.id);
 
             // set the type of the annotation
             anno.type = selText;
@@ -2662,7 +2684,10 @@ var anno = (function () {
             showAnnoBar();
             if (state && state !== null && state.enabled) {
                 // Get annotations for this specific URL
-                ajaxRESTRetrieveAnnotation(URI);
+                // This uris are the clean ones, so we could possibly not use
+                // getQueryParameterOfURL
+                var filtered = getQueryParameterOfURL('uri', URI);
+                ajaxRESTRetrieveAnnotation(filtered);
             }
         },
         /**
@@ -2676,7 +2701,9 @@ var anno = (function () {
             // open the annotation bar
             showAnnoBar();
             if (state && state !== null && state.enabled) {
-                createAnnotationUI(URI);
+                // Get annotations for this specific URL
+                var filtered = getQueryParameterOfURL('uri', URI);
+                createAnnotationUI(filtered);
             }
         },
         /**
@@ -2686,9 +2713,11 @@ var anno = (function () {
          * @param {type} URI
          * @returns {undefined}
          */
-        deleteAnnotation: function (annoID, targetURI) {
+        deleteAnnotation: function (annoID, URI) {
             if (state && state !== null && state.enabled) {
-                ajaxRESTDeleteAnnotation(annoID, targetURI);
+                // Get annotations for this specific URL
+                var filtered = getQueryParameterOfURL('uri', URI);
+                ajaxRESTDeleteAnnotation(annoID, filtered);
             }
         },
 
