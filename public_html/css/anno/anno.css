@@ -75,6 +75,11 @@
     font-weight: bold;
 }
 
+.annoCreationContainer {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: inherit;
+}
 
 .button-show:active {
 /*  background-color: #27496d;*/

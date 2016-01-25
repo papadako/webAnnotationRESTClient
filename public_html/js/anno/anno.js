@@ -350,6 +350,7 @@ var anno = (function () {
         createUI += "<div id=\"annoBarHeader\" class=\"list-group-item\"><b><h6>Create annotation targeting</h6>";
         createUI += "<a href=\"" + targetURI + "\" target=\"_blank\">" + targetURI + "</a></b></div>";
         // Annotation Type
+        createUI += "<div class=\"annoCreationContainer\">";
         createUI += "<div class=\"anno-list-group-item\" id=\"annoCreationType\">";
         createUI += "<h6><b>Annotation type</b></h6>";
         // Here is the form
@@ -371,6 +372,7 @@ var anno = (function () {
         createUI += "<div id=\"annoCreationMotivatedBy\"></div>";
         createUI += "<div id=\"annoCreationProv\"></div>";
         createUI += "<div id=\"annoCreateButton\"></div>";
+        createUI += "</div>";
         // Now add dom elements
         $("#annoInfo").html(createUI);
         // Add the events for selecting the type of the annotation
