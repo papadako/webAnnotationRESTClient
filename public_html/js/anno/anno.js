@@ -406,8 +406,7 @@ var anno = (function () {
             anno = {}; // reset annotation object
             anno.target = {};
             // Remove from the URI the filter out
-            anno.target.id = targetURI
-            alert(anno.target.id);
+            anno.target.id = targetURI;
 
             // set the type of the annotation
             anno.type = selText;
