@@ -1031,6 +1031,7 @@ var anno = (function () {
             pretty += "<br><b>" + parsedJSON.length + "</b> annotation available</h5></div>";
         else
             pretty += "<br><b>" + parsedJSON.length + "</b> annotations available</h5></div>";
+        pretty += "<br>";
 
         // Bootstrap list group
         // 1st the header
