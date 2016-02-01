@@ -54,14 +54,6 @@
     box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.4);
     background: #fff;
 }
-/* Buttons in tooltips */
-.button-anno:before {
-    content: "\270E";
-}
-
-.button-show:before {
-        content: "\1F50D";
-}
 
 .button-anno:active {
 /*  background-color: #27496d;*/

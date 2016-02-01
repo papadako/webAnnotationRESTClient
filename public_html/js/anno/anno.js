@@ -139,9 +139,11 @@ var anno = (function () {
                             + '<span class=\"label label-primary\" style=\"font-size: 100%\" title="Number of annotations">'
                             + state.annotatedURIs[targetURI] + '</span>'
                             + '<button onclick="anno.createAnnotation(\''
-                            + targetURI + '\');" class="button button-anno" title="New Annotation"></button>'
+                            + targetURI + '\');" class="button button-anno" title="New Annotation">'
+                            +'<span class="glyphicon glyphicon-pencil"></span></button>'
                             + '<button onclick="anno.showAnnotation(\''
-                            + targetURI + '\');" class="button button-show" title="Show Annotations"></button>'
+                            + targetURI + '\');" class="button button-show" title="Show Annotations">'
+                            + '<span class="glyphicon glyphicon-search"></span></button>'
                             + '</div>'
                             );
                 } else {
