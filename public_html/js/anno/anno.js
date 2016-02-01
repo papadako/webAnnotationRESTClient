@@ -1047,9 +1047,11 @@ var anno = (function () {
 
             // Currently type either simple Text or Polytraits
             var annoType = "";
-            if (currentAnno.body["@type"] === "dctypes:Text")
-                annoType = "DCTYPE - TEXT";
-            else {
+            if (currentAnno.body["@type"] === "dctypes:Text") {
+                annoType = "DCTYPE - TEXT ";
+            // Add value of text
+                annoType += "[" + currentAnno.body["value"] + "]";
+            } else {
                 // Get description of this specific URL
                 var result = $.grep(polytraitsMap, function (e) {
                     return e.type === currentAnno.body["@type"];
