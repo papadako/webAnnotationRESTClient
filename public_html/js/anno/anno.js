@@ -156,7 +156,8 @@ var anno = (function () {
                             annoWrapper,
                             '<div>'
                             + '<button onclick="anno.createAnnotation(\''
-                            + targetURI + '\');" class="button button-anno" title="New Annotation"></button>'
+                            + targetURI + '\');" class="button button-anno" title="New Annotation">'
+                            + '<span class="glyphicon glyphicon-pencil"></span></button>'
                             + '</div>'
                             );
                 }
