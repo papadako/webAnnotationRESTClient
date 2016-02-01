@@ -1047,11 +1047,11 @@ var anno = (function () {
             readAnnotation(parsedJSON[i]["@graph"][0], currentAnno);
 
             // Currently type either simple Text or Polytraits
-            var annoType = "";
+            var annoHeader = "";
             if (currentAnno.body["@type"] === "dctypes:Text") {
-                annoType = "DCTYPE - TEXT ";
-            // Add value of text
-                annoType += "[" + currentAnno.body["value"] + "]";
+                annoHeader = "DCTYPE - TEXT ";
+                // Add value of text
+                annoHeader += "[" + currentAnno.body["value"] + "]";
             } else {
                 // Get description of this specific URL
                 var result = $.grep(polytraitsMap, function (e) {
@@ -1074,13 +1074,13 @@ var anno = (function () {
                     alert("Something went wrong! Many types were found!");
                 }
                 // Show information of annotation type and value
-                annoType = "POLYTRAITS - "
+                annoHeader = "POLYTRAITS - "
                         + description + " [" + modality + "]";
             }
             pretty += "<li class=\"anno-list-group-item\">";
             pretty += "<a class=\"btn btn-primary btn-block wrap\" href=\"#annoPanelCollapse"
                     + (i + 1) + "\" data-toggle=\"collapse\">";
-            pretty += "<h5>" + (i + 1) + "." + annoType + "</h5></a>\n";
+            pretty += "<h5>" + (i + 1) + "." + annoHeader + "</h5></a>\n";
             pretty += "<div id=\"annoPanelCollapse" + (i + 1) + "\" class=\"panel-collapse collapse\">";
             // List with annotation elements
             pretty += "<ul class=\"list-group\" style=\"margin: 2px\">";
@@ -1091,7 +1091,7 @@ var anno = (function () {
             pretty += "<h6><u>Body</u></h6></a>";
             pretty += "<div id=\"annoPanelCollapseBody" + (i + 1) + "\" class=\"panel-collapse collapse wrap annoParts\">";
             // If this is not a dctype text
-            if (annoType !== "DCTYPE - TEXT") {
+            if (currentAnno.body["@type"] !== "dctypes:Text") {
                 pretty += "<b><i>type</i>:</b> <b><a class=\"annoPanelRef\" target=\"_blank\" href=\""
                         + currentAnno.body["@type"] + "\">" + description + "</a></b><br>";
                 pretty += "<b><i>value</i>:</b> <b><a class=\"annoPanelRef\" target=\"_blank\" href=\""
@@ -1102,7 +1102,7 @@ var anno = (function () {
                         + "http://dublincore.org/documents/dcmi-terms/#dcmitype-Text" + "\">"
                         + "http://dublincore.org/documents/dcmi-terms/#dcmitype-Text" + "</a></b><br>";
                 pretty += "<b><i>value</i>:</b> <b>\"" + currentAnno.body["value"] + "\"</b><br>";
-                http://dublincore.org/documents/dcmi-terms/#dcmitype-Text
+                //http://dublincore.org/documents/dcmi-terms/#dcmitype-Text
                         // If text show also format and language
                         if (currentAnno.body["format"])
                     pretty += "<b><i>format</i>:</b> <b>" + currentAnno.body["format"] + "</b><br>";
