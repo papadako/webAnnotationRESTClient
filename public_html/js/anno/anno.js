@@ -26,7 +26,7 @@
 var anno = (function () {
 // Object that holds annotation related information
     var annoConfig = {
-        domain: 'http://62.217.127.128', // server offering the REST API
+        domain: 'http://localhost', // server offering the REST API
         port: 8080, // port# of the server
         service: 'annotationService/annotations', // the service runs at
         // filter this out from the URIs we want to annotate
