@@ -1213,7 +1213,6 @@ var anno = (function () {
 
         // if this is an annotation object, get all relevant information
         // Have to be rather careful with the names!
-        console.log(jsonld);
         if (jsonld["@type"] && jsonld["@type"] === "oa:Annotation") {
             anno.id = jsonld["@id"].substr(jsonld["@id"].lastIndexOf('/') + 1);    // id of anno
             anno.URI = jsonld["@id"];   // URI of anno
