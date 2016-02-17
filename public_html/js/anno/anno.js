@@ -86,6 +86,7 @@ var anno = (function () {
             width: 300,
             push: false,
             position: "right",
+            zIndex: 1000000,    // Make sure that panel is not hidden by bootstrap nav bar 
             // speed: 600,
             trigger: $(".handle"),
             // autoEscape: false,
