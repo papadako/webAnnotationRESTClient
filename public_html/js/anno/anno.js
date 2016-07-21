@@ -309,7 +309,7 @@ var anno = (function () {
     }
 
     /**
-     * returns if a URI is
+     * returns if a URI is annotated
      * @param {type} URI
      * @returns {Boolean}
      */
@@ -361,8 +361,8 @@ var anno = (function () {
     }
 
     /**
-     * Function that loads to the annotation panel the UI for the creation of the
-     * annotation
+     * Function that loads to the annotation panel the UI for
+     * creating an annotation
      * @param {type} targetURI
      * @returns {undefined}
      */
@@ -452,7 +452,8 @@ var anno = (function () {
 
 
     /**
-     * After selecting the type of the annotation, create the rest of
+     * After selecting the type of the annotation, create the rest of the
+     * annotation creation UI
      * @param {type} anno
      * @returns {undefined}
      */
@@ -2664,7 +2665,8 @@ var anno = (function () {
         /**
          * function that enables the annotation service
          * This is the starting point!
-         * The elementID is the DOM element the URLs of which we are going to annotate
+         * The elementID is the DOM element which containis the URLs
+         * we are going to annotate
          *
          * @param {type} elementID
          * @returns {undefined}
@@ -2703,7 +2705,7 @@ var anno = (function () {
         /**
          * Retrieves the annotation for a specific URI, parses the json-ld info
          * and shows it in the annotation window
-         * @param {type} URI
+         * @param {type} URI the URI targeted by the annotation
          * @returns {undefined}
          */
         showAnnotation: function (URI) {
@@ -2721,7 +2723,7 @@ var anno = (function () {
          * Function responsible for creating an annotation for a specific URI
          * We have to pass the jsonld string of the annotation we want to create
          *
-         * @param {type} URI
+         * @param {type} URI the URI targeted by the annotation
          * @returns {undefined}
          */
         createAnnotation: function (URI) {
@@ -2737,7 +2739,8 @@ var anno = (function () {
          * Function responsible for deleting an annotation for a specific URI
          * We have to pass the jsonld string of the annotation we want to create
          *
-         * @param {type} URI
+         * @param {type} annodID the id of the annotation tp
+         * @param {type} URI the URI targeted by the annotation
          * @returns {undefined}
          */
         deleteAnnotation: function (annoID, URI) {
