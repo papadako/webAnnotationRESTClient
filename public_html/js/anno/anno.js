@@ -879,6 +879,19 @@ var anno = (function () {
     }
 
     /**
+     *
+     * Setup the request to allow cookies in CORS requests and header to be JSON-LD
+     * @param {type} request
+     * @returns {undefined}
+     */
+    function setUpRequest(request) {
+        // Set header to ld+json
+        request.setRequestHeader("Content-Type", "application/ld+json;charset=UTF-8");
+        // By default, it's false. Without that flag being set
+        // cookies are not transmitted and cookie headers in the response are ignored.
+        request.withCredentials = true;
+    }
+    /**
      * AJAX request for creating a specific annotation
      * @param {type} anno
      * @param {type} targetURI
@@ -892,8 +905,8 @@ var anno = (function () {
             }
         };
         request.open("POST", getServiceURL(), true);
-        // Set header to ld+json
-        request.setRequestHeader("Content-Type", "application/ld+json;charset=UTF-8");
+        // Setup request for LDJSON and CORS with cookies
+        setUpRequest(request);
         var parameters = anno;
         request.send(parameters);
         showConsoleMessage("Creating annotation...");
@@ -930,7 +943,8 @@ var anno = (function () {
         // Set header to ld+json
         var retrieveURL = getServiceURL() + "target/" + "?uri=" + encodeURIComponent(targetURI);
         request.open("GET", retrieveURL, true);
-        request.setRequestHeader("Content-Type", "application/ld+json;charset=UTF-8");
+        // Setup request for LDJSON and CORS with cookies
+        setUpRequest(request);
         var parameters = null;
         request.send(parameters);
         showConsoleMessage("Retrieving annotations...");
@@ -971,8 +985,8 @@ var anno = (function () {
             }
         };
         request.open("DELETE", uri, true);
-        // Set header to ld+json
-        request.setRequestHeader("Content-Type", "application/ld+json;charset=UTF-8");
+        // Setup request for LDJSON and CORS with cookies
+        setUpRequest(request);
         var parameters = null;
         request.send(parameters);
         showConsoleMessage("Removing annotation...");
@@ -1009,8 +1023,8 @@ var anno = (function () {
         // The request is a POST request, since for optimization reasons we would
         // like the client to send which URIs should be queried if they are annotated
         request.open("POST", getServiceURL() + "targetsOnly", true);
-        // Set header to json
-        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        // Setup request for LDJSON and CORS with cookies
+        setUpRequest(request);
 
         var parameters = null;
         request.send(parameters);
